@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import './index.css';
+import './index.scss';
 
 function Square({ onClick, value }) {
     return (
@@ -58,7 +58,6 @@ class Game extends React.Component {
             stepNumber: 0,
             xIsNext: true,
             user: 'Vlad',
-            boardClasses: 'board',
             statistics: {
                 user: {
                     wins: 0,
@@ -102,7 +101,6 @@ class Game extends React.Component {
         this.setState({
             stepNumber: step,
             xIsNext: (step % 2) === 0,
-            boardClasses: 'board',
         })
     }
 
@@ -139,7 +137,6 @@ class Game extends React.Component {
             }],
             stepNumber: 0,
             xIsNext: true,
-            boardClasses: 'board',
             statistics: {
                 user: {
                     wins: winner === 'X' ? user.wins + 1 : user.wins,
@@ -182,18 +179,16 @@ class Game extends React.Component {
             );
         });
 
-        let status;
+        let status, boardClasses = 'board';
         if (winner) {
             if (winner === 'nobody') {
                 status = 'Winner: nobody';
             } else {
-                // !!! переделать так что бы не изменять стейт из под рендера
-                if (!this.state.boardClasses.includes(`board-${i}`)) {
-                    this.setState({
-                        boardClasses: `${this.state.boardClasses} board-${i}`
-                    });
-                }
-                status = `Winner: ${winner === 'X' ? this.state.user + '(X)' : 'Computer(O)'}`;
+                // каждый раз когда происходят изменения в стейте и компонент вызывает заново метод рендер
+                // происходит создание переменной boardClasses
+                // итого - это простая алтернатива удержанию значения в стейте
+                boardClasses += ` board-${i}`;
+                status = `Winner: ${winner === 'X' ? user + '(X)' : 'Computer(O)'}`;
             }
         } else {
             status = `Next player: ${xIsNext ? user + '(X)' : 'computer(O)'}`;
@@ -206,7 +201,7 @@ class Game extends React.Component {
                         squares={current.squares}
                         onClick={(i) => this.handleClick(i)}
                         // тут "костыль" с классами, что бы реализовать перечеркивание
-                        boardClasses={this.state.boardClasses}
+                        boardClasses={boardClasses}
                     />
                 </div>
                 <div className="game-info">
@@ -352,7 +347,7 @@ class App extends React.Component {
             .signInReq(userInfo)
             .then(res => {
                 if (res.ok) {
-                    this.setState({ isLoggedIn: true });
+                    this.setState({ isLoggedIn: true, hasError: false });
                 } else {
                     this.setState({ hasError: true });
                 }
@@ -360,7 +355,6 @@ class App extends React.Component {
     };
 
     onExit = () => {
-        // sign out request
         this.state.networkService
             .signOutReq()
             .then(res => {
