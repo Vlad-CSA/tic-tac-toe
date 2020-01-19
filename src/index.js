@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import './index.css';
 
-function Square(props) {
+function Square({ onClick, value }) {
     return (
         <button
             className="square"
-            onClick={ props.onClick }>
-            { props.value }
+            onClick={ onClick }>
+            { value }
         </button>
     );
 }
@@ -88,7 +88,7 @@ class Game extends React.Component {
         if (calculateWinner(squares).winner || squares[i]) {
             return;
         }
-        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        squares[i] = 'X';
         this.setState({
             history: history.concat([{
                 squares,
@@ -131,6 +131,8 @@ class Game extends React.Component {
 
     handleNextMatch(winner) {
         if (!winner) return;
+        const { user } = this.state.statistics;
+        const { computer } = this.state.statistics;
         this.setState({
             history: [{
                 squares: Array(9).fill(null),
@@ -140,14 +142,14 @@ class Game extends React.Component {
             boardClasses: 'board',
             statistics: {
                 user: {
-                    wins: winner === 'X' ? this.state.statistics.user.wins + 1 : this.state.statistics.user.wins,
-                    loses: winner === 'O' ? this.state.statistics.user.loses + 1 : this.state.statistics.user.loses,
-                    draws: winner === 'nobody' ? this.state.statistics.user.draws + 1 : this.state.statistics.user.draws,
+                    wins: winner === 'X' ? user.wins + 1 : user.wins,
+                    loses: winner === 'O' ? user.loses + 1 : user.loses,
+                    draws: winner === 'nobody' ? user.draws + 1 : user.draws,
                 },
                 computer: {
-                    wins: winner === 'O' ? this.state.statistics.computer.wins + 1 : this.state.statistics.computer.wins,
-                    loses: winner === 'X' ? this.state.statistics.computer.loses + 1 : this.state.statistics.computer.loses,
-                    draws: winner === 'nobody' ? this.state.statistics.computer.draws + 1 : this.state.statistics.computer.draws,
+                    wins: winner === 'O' ? computer.wins + 1 : computer.wins,
+                    loses: winner === 'X' ? computer.loses + 1 : computer.loses,
+                    draws: winner === 'nobody' ? computer.draws + 1 : computer.draws,
                 },
             }
         });
@@ -163,7 +165,8 @@ class Game extends React.Component {
 
     render() {
 
-        const { history } = this.state;
+        //есть минус у деструктуризации - конструкция this.%что-то% заметнее чем просто переменная
+        const { history, xIsNext, user, statistics } = this.state;
         const current = history[this.state.stepNumber];
         //  небольшой прием, что бы не использовать переменную с глобальной областью видимости как подумал изначально
         const { winner, i } = calculateWinner(current.squares);
@@ -193,7 +196,7 @@ class Game extends React.Component {
                 status = `Winner: ${winner === 'X' ? this.state.user + '(X)' : 'Computer(O)'}`;
             }
         } else {
-            status = `Next player: ${this.state.xIsNext ? this.state.user + '(X)' : 'computer(O)'}`;
+            status = `Next player: ${xIsNext ? user + '(X)' : 'computer(O)'}`;
         }
 
         return (
@@ -221,17 +224,17 @@ class Game extends React.Component {
                     <div>
                         <p><b>{this.state.user}</b></p>
                         <ul>
-                            <li>Wins: <b>{this.state.statistics.user.wins}</b></li>
-                            <li>Loses: <b>{this.state.statistics.user.loses}</b></li>
-                            <li>Draws: <b>{this.state.statistics.user.draws}</b></li>
+                            <li>Wins: <b>{statistics.user.wins}</b></li>
+                            <li>Loses: <b>{statistics.user.loses}</b></li>
+                            <li>Draws: <b>{statistics.user.draws}</b></li>
                         </ul>
                     </div>
                     <div>
                         <p><b>Computer</b></p>
                         <ul>
-                            <li>Wins: <b>{this.state.statistics.computer.wins}</b></li>
-                            <li>Loses: <b>{this.state.statistics.computer.loses}</b></li>
-                            <li>Draws: <b>{this.state.statistics.computer.draws}</b></li>
+                            <li>Wins: <b>{statistics.computer.wins}</b></li>
+                            <li>Loses: <b>{statistics.computer.loses}</b></li>
+                            <li>Draws: <b>{statistics.computer.draws}</b></li>
                         </ul>
                     </div>
                 </div>
@@ -313,7 +316,7 @@ class NetworkService {
         });
     };
 
-    sendDataFromUser = async (data) =>{
+    sendDataFromUser = async (data) => {
         return await fetch(`${this._apiBase}user.setstate`, {
             method: 'POST',
             credentials: 'include',
