@@ -131,9 +131,10 @@ export default class Game extends React.Component {
                 `Go to move #${move}` :
                 `Go to game start`;
             return (
-                <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
-                </li>
+                    <button
+                        className="btn btn-secondary dropdown-item"
+                        onClick={() => this.jumpTo(move)}>{desc}
+                    </button>
             );
         });
 
@@ -157,20 +158,8 @@ export default class Game extends React.Component {
 
         return (
             <div className="game">
-                <button
-                    onClick={() => this.randomTurn()}
-                    className={classListComputerTurn}
-                    disabled={!!xIsNext}>
-                    Computer Turn
-                </button>
-                <button
-                    onClick={() => this.handleNextMatch(winner)}
-                    className={classListNextMatch}
-                    disabled={winner === null}>
-                    Next Match
-                </button>
-                <button onClick={this.props.onExit} className="btn btn-danger">Exit</button><br/>
                 <div className="game-board">
+                    <h5>{ status }</h5>
                     <Board
                         squares={current.squares}
                         onClick={(i) => this.handleClick(i)}
@@ -178,30 +167,58 @@ export default class Game extends React.Component {
                         boardClasses={boardClasses}
                     />
                 </div>
-                <div className="game-info">
-
-                    <div>{ status }</div>
-                    <ol>{ moves }</ol>
-                </div>
-                <div className="statistics">
-                    <div>
-                        <p><b>{this.state.user}</b></p>
-                        <ul>
-                            <li>Wins: <b>{statistics.user.wins}</b></li>
-                            <li>Loses: <b>{statistics.user.loses}</b></li>
-                            <li>Draws: <b>{statistics.user.draws}</b></li>
-                        </ul>
+                <div className="wrap">
+                    <div className="controls">
+                        <button
+                            onClick={() => this.randomTurn()}
+                            className={classListComputerTurn}
+                            disabled={!!xIsNext}>
+                            Computer Turn
+                        </button>
+                        <button
+                            onClick={() => this.handleNextMatch(winner)}
+                            className={classListNextMatch}
+                            disabled={winner === null}>
+                            Next Match
+                        </button>
+                        <button onClick={this.props.onExit} className="btn btn-danger">Exit</button><br/>
                     </div>
-                    <div>
-                        <p><b>Computer</b></p>
-                        <ul>
-                            <li>Wins: <b>{statistics.computer.wins}</b></li>
-                            <li>Loses: <b>{statistics.computer.loses}</b></li>
-                            <li>Draws: <b>{statistics.computer.draws}</b></li>
-                        </ul>
+                    <div className="statistics">
+                        <table className="table table-hover">
+                            <thead>
+                            <tr className="table-secondary">
+                                <th scope="col">Player</th>
+                                <th scope="col">Wins</th>
+                                <th scope="col">Loses</th>
+                                <th scope="col">Draws</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr className="table-primary">
+                                <th scope="row">{this.state.user}</th>
+                                <td>{statistics.user.wins}</td>
+                                <td>{statistics.user.loses}</td>
+                                <td>{statistics.user.draws}</td>
+                            </tr>
+                            <tr className="table-info">
+                                <th scope="row">Computer</th>
+                                <td>{statistics.computer.wins}</td>
+                                <td>{statistics.computer.loses}</td>
+                                <td>{statistics.computer.draws}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            History of moves
+                        </button>
+                        <div className="dropdown-menu">
+                            { moves }
+                        </div>
                     </div>
                 </div>
-
             </div>
         );
     }

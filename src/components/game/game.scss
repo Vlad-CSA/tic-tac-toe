@@ -4,11 +4,26 @@
 
 .game {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+
+  h5 {
+    width: 130px;
+  }
+
+  .wrap {
+    margin-left: 1.5rem;
+  }
 
   &-info {
-    margin-left: 20px;
     min-width: 180px;
+  }
+
+  .dropdown-item:hover, .dropdown-item:focus {
+    background-color: #235180;
+  }
+
+  .controls {
+    margin-bottom: 1rem;
   }
 }
 
