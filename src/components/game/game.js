@@ -152,8 +152,24 @@ export default class Game extends React.Component {
             status = `Next player: ${xIsNext ? user + '(X)' : 'computer(O)'}`;
         }
 
+        const classListComputerTurn = xIsNext ? 'btn btn-secondary disabled' : 'btn btn-info';
+        const classListNextMatch = winner === null ? 'btn btn-secondary disabled' : 'btn btn-success';
+
         return (
             <div className="game">
+                <button
+                    onClick={() => this.randomTurn()}
+                    className={classListComputerTurn}
+                    disabled={!!xIsNext}>
+                    Computer Turn
+                </button>
+                <button
+                    onClick={() => this.handleNextMatch(winner)}
+                    className={classListNextMatch}
+                    disabled={winner === null}>
+                    Next Match
+                </button>
+                <button onClick={this.props.onExit} className="btn btn-danger">Exit</button><br/>
                 <div className="game-board">
                     <Board
                         squares={current.squares}
@@ -163,13 +179,7 @@ export default class Game extends React.Component {
                     />
                 </div>
                 <div className="game-info">
-                    <button onClick={() => this.randomTurn()}>Computer Turn</button><br/>
-                    <button
-                        onClick={() => this.handleNextMatch(winner)}
-                        style={{color: "blue"}}>
-                        Next Match
-                    </button>
-                    <button onClick={this.props.onExit}>Exit</button><br/>
+
                     <div>{ status }</div>
                     <ol>{ moves }</ol>
                 </div>
