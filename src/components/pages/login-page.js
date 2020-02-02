@@ -1,30 +1,45 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
 
-const LoginPage = ({ isLoggedIn, onLogin, hasError }) => {
+import './login-page.scss';
+
+const BadLoginMessage = ({ onCloseMessage }) => {
+    return (
+        <div className="alert alert-dismissible alert-danger login-message">
+            <button type="button" className="close" data-dismiss="alert"
+            onClick={onCloseMessage}>
+                &times;
+            </button>
+            <p>Wrong username or password. Try again</p>
+        </div>
+    );
+};
+
+const LoginPage = ({ isLoggedIn, onLogin, hasError, onCloseMessage }) => {
 
     if (isLoggedIn) {
-        return <Redirect to="/game" />
+        return <Redirect to="/tic-tac-toe/game" />
     }
 
-    const Error = hasError ? <h3 style={{color: "red"}}>Wrong username or password</h3> : null;
+    const Error = hasError ? <BadLoginMessage onCloseMessage={onCloseMessage}/> : null;
 
     return (
-        <div className="login-form">
-            <h2>Welcome to Tic Tac Toe</h2>
-            <p>Login to play the game</p>
-            <p>
-                <label htmlFor="user">User name</label>
-                <input type="text" id="user" name="user"/>
-            </p>
-            <p>
-                <label htmlFor="pass">Password</label>
-                <input type="text" id="pass" name="pass"/>
-            </p>
-            <button
-                onClick={onLogin}>
-                Enter
-            </button>
+        <div className="jumbotron login-form">
+            <label htmlFor="user">
+                <h4>Welcome to<br/> Tic Tac Toe</h4>
+                <p className="text-primary">Login to play the game</p>
+            </label>
+            <div className="form-group">
+                <input type="text" id="user" name="user" className="form-control" placeholder="username"/>
+            </div>
+            <div className="form-group">
+                <input type="text" id="pass" name="pass" className="form-control" placeholder="password"/>
+                <button
+                    className="btn btn-primary btn-block"
+                    onClick={onLogin}>
+                    Enter
+                </button>
+            </div>
             {Error}
         </div>
     );

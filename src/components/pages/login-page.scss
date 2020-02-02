@@ -1,0 +1,25 @@
+.jumbotron {
+  padding: 3rem 1rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: auto;
+  align-items: center;
+  border: 2px solid #558edd;
+
+  .login-message {
+    margin: 1rem;
+  }
+
+  button {
+    margin-top: 1rem;
+  }
+
+  h4 {
+    text-align: center;
+  }
+
+}
