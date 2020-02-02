@@ -11,7 +11,7 @@ const MainGamePage = ({ isLoggedIn, onExit }) => {
         );
     }
 
-    return <Redirect to="/login" />;
+    return <Redirect to="/tic-tac-toe/login" />;
 };
 
 export default MainGamePage;

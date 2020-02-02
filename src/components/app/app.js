@@ -45,24 +45,31 @@ export default class App extends React.Component {
             });
     };
 
+    onCloseErrorMessage = () => {
+        if (this.state.hasError) {
+            this.setState({ hasError: false })
+        }
+    };
+
     render() {
         return (
             <Router>
                 <Switch>
-                    <Route path="/login"
+                    <Route path="/tic-tac-toe/login"
                            render={() =>
                                <LoginPage
                                    isLoggedIn={this.state.isLoggedIn}
                                    onLogin={this.onLogin}
-                                   hasError={this.state.hasError}/>
+                                   hasError={this.state.hasError}
+                                   onCloseMessage={this.onCloseErrorMessage}/>
                            }/>
-                    <Route path="/game"
+                    <Route path="/tic-tac-toe/game"
                            render={() =>
                                <MainGamePage
                                    isLoggedIn={this.state.isLoggedIn}
                                    onExit={this.onExit}/>
                            }/>
-                    <Redirect to="/login"/>
+                    <Redirect to="/tic-tac-toe/login"/>
                     {/* альтернативный вариант неправильных адресов */}
                     {/* но redirect более user-friendly как по мне, особенно для SPA */}
                     <Route render={() => <h2>Page not found</h2>} />
