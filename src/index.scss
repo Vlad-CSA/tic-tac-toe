@@ -1,6 +1,13 @@
+html,
 body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  //align-items: center;
   font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
 }
 
 ol, ul {
@@ -13,130 +20,6 @@ ol, ul {
   display: table;
 }
 
-.status {
-  margin-bottom: 10px;
-}
-
-.square {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
-}
-
-.square:focus {
-  outline: none;
-}
-
-.kbd-navigation .square:focus {
-  background: #ddd;
-}
-
-.game {
-  display: flex;
-  flex-direction: row;
-
-  &-info {
-    margin-left: 20px;
-    min-width: 180px;
-  }
-}
-
-.statistics ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  margin-right: 40px;
-  align-items: center;
-  border: 1px solid #558edd;
-
-  label {
-    display: inline-block;
-    min-width: 75px;
-  }
-
-  button {
-    margin-bottom: 20px;
-  }
-
-}
-
-
-/* дальше идет идея сделать все втупую, алтернатива этопу сделать на свг или канвасе */
-/* но  я точно не знаю, будет работать или нет, а это работает */
-
-%board_before {
-  border-bottom: 3px solid red;
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 50%;
-}
-
-.board {
-  position: relative;
-
-  &-0:before {
-    @extend %board_before;
-    height: 15%;
-  }
-
-  &-1:before {
-    @extend %board_before;
-  }
-
-  &-2:before {
-    @extend %board_before;
-    height: 82%;
-  }
-
-  &-3:before {
-    @extend %board_before;
-    height: 65%;
-    top: 16px;
-    transform: rotate(90deg);
-  }
-
-  &-4:before {
-    @extend %board_before;
-    top: 22px;
-    left: 26px;
-    transform: rotate(90deg);
-  }
-
-  &-5:before {
-    @extend %board_before;
-    top: 23px;
-    left: 58px;
-    transform: rotate(90deg);
-  }
-
-  &-6:before {
-    @extend %board_before;
-    width: 137%;
-    top: 5px;
-    transform: rotate(45deg);
-  }
-
-  &-7:before {
-    @extend %board_before;
-    width: 137%;
-    top: 5px;
-    left: -35px;
-    transform: rotate(-45deg);
-  }
+#root {
+  margin: 60px auto;
 }
