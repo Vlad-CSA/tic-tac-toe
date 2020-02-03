@@ -7,6 +7,8 @@
 - благодаря этому реализована авторизация и разделение приложения на части доступные всем и доступные только
 авторизованным пользователям
 
+**Для входа использовать данные: username = username, password = password**
+
 ![screenshot of app](https://github.com/Piratt14/tic-tac-toe/blob/master/misc/Demo-version-1.jpg)
 
 Будущая версия:
