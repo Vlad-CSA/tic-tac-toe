@@ -132,6 +132,7 @@ export default class Game extends React.Component {
                 `Go to game start`;
             return (
                     <button
+                        key={move}
                         className="btn btn-secondary dropdown-item"
                         onClick={() => this.jumpTo(move)}>{desc}
                     </button>
