@@ -6,7 +6,7 @@ import './login-page.scss';
 const BadLoginMessage = ({ onCloseMessage }) => {
     return (
         <div className="alert alert-dismissible alert-danger login-message">
-            <button type="button" className="close" data-dismiss="alert"
+            <button type="button" className="close"
             onClick={onCloseMessage}>
                 &times;
             </button>
